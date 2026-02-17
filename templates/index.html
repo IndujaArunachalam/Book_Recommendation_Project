@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookMatch AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>📚 BookMatch AI</h1>
+        <p>Enter a book you loved, and we'll find your next read.</p>
+        
+        <form method="POST">
+            <input type="text" name="book_title" placeholder="e.g. The Hobbit" required>
+            <button type="submit">Find Recommendations</button>
+        </form>
+
+        {% if query %}
+            <hr>
+            {% if results %}
+                <h2>Because you liked "{{ query }}":</h2>
+                <div class="results">
+                    {% for book in results %}
+                        <div class="card">
+                            <h3>{{ book.title }}</h3>
+                            <p>{{ book.summary[:200] }}...</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Sorry, we couldn't find that book in our database.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
